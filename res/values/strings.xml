@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">小琳机器人</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="send">发送</string>
+    
+    <string name="NetConnectFailed">噢，好像没能连接上网络，要不你检查一下 </string>
+    <string-array name="WelcomeSentence">
+        <item >哈，Nice to meet you!How are you？</item>
+        <item> 主人，你好，我是小琳机器人，我有什么可以帮你的么？</item>
+        <item>陛下，奴婢恭候多时！</item>
+        <item> 亲爱的，好久不见！</item>
+        <item> 哈哈，你这个死跑龙套的！</item>
+    </string-array>
+
+</resources>
