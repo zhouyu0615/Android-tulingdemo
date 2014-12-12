@@ -73,12 +73,12 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		listView.setAdapter(textAdapter);
 
 		ListData listData = new ListData(GetWelcomeSentence(),
-				ListData.RECEIVER);
+				ListData.RECEIVER,getTime());
 		lists.add(listData);
 		
 		if (isNetConnected(this)==false) {
 			String netFailedstring=getResources().getString(R.string.NetConnectFailed);
-			lists.add(new ListData(netFailedstring, ListData.RECEIVER));
+			lists.add(new ListData(netFailedstring, ListData.RECEIVER,getTime()));
 			
 		}
 
@@ -108,26 +108,24 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 	public void ParseText(String str) {
 		JSONObject jsonObject;
-		ListData lData;
-		try {
-			
-			if(str!=null)
+		
+		try {	
+			if(str!="")
 			{
 			jsonObject = new JSONObject(str);
 			System.out.println(jsonObject.getString("code"));
 			System.out.println(jsonObject.getString("text"));
-
-			 lData = new ListData(jsonObject.getString("text"),
-					ListData.RECEIVER);
-			}
-			else {
-			 lData = new ListData(getResources().getString(R.string.NetConnectFailed),
-						ListData.RECEIVER);
-			}
+			ListData  lData = new ListData(jsonObject.getString("text"),
+					ListData.RECEIVER,getTime());
 			
 			lists.add(lData);
+			}else {
+			ListData	lData=new ListData(getResources().getString(R.string.Servefailed), 
+						ListData.RECEIVER, getTime());
+			lists.add(lData);
+			}
+			 
 			textAdapter.notifyDataSetChanged();
-
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,9 +141,8 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		String sendString = contentString.replace(" ", "");
 		sendString = sendString.replace("\n", "");
 
-		ListData sendData = new ListData(contentString, ListData.SEND);
+		ListData sendData = new ListData(contentString, ListData.SEND,getTime());
 		lists.add(sendData);
-		//getTime();
 		
 		if (lists.size()>=100) {
 			for (int i = 0; i < lists.size()-30; i++) {
@@ -173,22 +170,28 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 			}
 		}
 		return false;
-
 	}
 	
 	@SuppressLint("SimpleDateFormat") public String getTime() {
 		String timeString=null;
 		
 		currentTime=System.currentTimeMillis();
-		SimpleDateFormat format= new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 		
+		if (currentTime-oldTime>=3*50*1000) {	
+		    oldTime=currentTime;
+		SimpleDateFormat format= new SimpleDateFormat("yyyy年MM月dd日  HH:mm:ss");		
 		Date curdate=new Date(currentTime);
 		timeString=format.format(curdate);
 		
 		System.out.println("------->"+timeString);
 			
 		return timeString;
-		
+		}
+		else 
+		{
+			return "";
+			
+		}
 		
 	}
 

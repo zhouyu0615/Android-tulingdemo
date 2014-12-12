@@ -10,7 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="28dp"
         android:layout_toLeftOf="@+id/iv"
-        android:background="@drawable/aio_user_bg_nor_11" />
+        android:background="@drawable/aio_user_bg_nor_11" 
+        android:gravity="center"/>
 
     <ImageView
         android:id="@+id/iv"
@@ -19,6 +20,15 @@
         android:layout_alignBottom="@+id/tv"
         android:layout_alignParentRight="true"
         android:padding="10dp"
-        android:src="@drawable/zhouyu" />
+        android:src="@drawable/jinguagnzhang" />
+
+    <TextView
+        android:id="@+id/TimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/iv"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="42dp"
+ />
 
 </RelativeLayout>

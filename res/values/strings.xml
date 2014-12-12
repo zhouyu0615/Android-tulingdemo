@@ -7,12 +7,15 @@
     <string name="send">发送</string>
     
     <string name="NetConnectFailed">噢，好像没能连接上网络，要不你检查一下 </string>
+    <string name="Servefailed">抱歉，好像没能连接上网络，或者是服务器出了点小问题 </string>
+    
     <string-array name="WelcomeSentence">
         <item >哈，Nice to meet you!How are you？</item>
         <item> 主人，你好，我是小琳机器人，我有什么可以帮你的么？</item>
         <item>陛下，奴婢恭候多时！</item>
         <item> 亲爱的，好久不见！</item>
-        <item> 哈哈，你这个死跑龙套的！</item>
+        <item >Hello,May I help you ,sir</item>
+        <item >一日不见兮，如隔三秋</item>
     </string-array>
 
 </resources>

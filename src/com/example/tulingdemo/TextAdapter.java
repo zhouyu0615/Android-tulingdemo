@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -53,8 +54,12 @@ public class TextAdapter extends BaseAdapter {
 			layout = (RelativeLayout) inflater.inflate(R.layout.rightitem, null);
 		}
 		TextView tv = (TextView) layout.findViewById(R.id.tv);
+		TextView timeText=(TextView) layout.findViewById(R.id.TimeText);
+
+		
 
 		tv.setText(lists.get(position).getContent());
+		timeText.setText(lists.get(position).getTime());
 
 		return layout;
 		
