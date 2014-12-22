@@ -3,6 +3,8 @@ package com.example.tulingdemo;
 import java.util.List;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +59,10 @@ public class TextAdapter extends BaseAdapter {
 		TextView timeText=(TextView) layout.findViewById(R.id.TimeText);
 
 		
+        
 
 		tv.setText(lists.get(position).getContent());
+		
 		timeText.setText(lists.get(position).getTime());
 
 		return layout;

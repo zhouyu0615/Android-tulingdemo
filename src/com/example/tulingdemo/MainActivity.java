@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 //api key f7f0654e45e5fb1638e7e89d5d310c3c
@@ -107,15 +108,12 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 	}
 
 	public void ParseText(String str) {
-		JSONObject jsonObject;
-		
+	
 		try {	
 			if(str!="")
 			{
-			jsonObject = new JSONObject(str);
-			System.out.println(jsonObject.getString("code"));
-			System.out.println(jsonObject.getString("text"));
-			ListData  lData = new ListData(jsonObject.getString("text"),
+				
+			ListData  lData = new ListData(getStringFormJson(str),
 					ListData.RECEIVER,getTime());
 			
 			lists.add(lData);
@@ -132,6 +130,66 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		}
 
 	}
+	
+
+
+	private static final int TEXT_INFO=100000;	 //文本类数据
+	private static final int URL_INFO=200000;	// 网址类数据
+	private static final int NOVEL_INFO=301000;	// 小说
+	private static final int NEWS_INFO=302000;	// 新闻
+	private static final int DOWNLOAD_INFO=304000;	// 应用、软件、下载
+	private static final int TRAIN_INFO=305000;	// 列车
+	private static final int FLIGHT_INFO=306000;	// 航班
+	private static final int GROUPBUY_INFO=	307000;	// 团购
+	private static final int DISCOUNT_INFO=	308000;	// 优惠
+	private static final int HOTEL_INFO=	309000;	 //酒店
+	private static final int LOTTERY_INFO=310000;	// 彩票
+	private static final int PRICE_INFO=311000;	// 价格
+	private static final int RESTAURANT_INFO=312000;	// 餐厅
+	private static final int LENGTHERROR_INFO=40001;	// key的长度错误（32位）
+	private static final int CONTENTNULL_INFO=40002	; //请求内容为空
+	private static final int KEYERROR_INFO=40003;	// key错误或帐号未激活
+	private static final int REQUESTTIMESOUT_INFO=40004;	 //当天请求次数已用完
+	private static final int NOTSUPPORT_INFO=40005;	 //暂不支持该功能
+	private static final int SERVERICEUPGRADE_INFO=40006;	// 服务器升级中
+	private static final int DATAEXCEPTION_INFO=40007;	 //服务器数据格式异常
+	private static final int DEFAULT_INFO=50000;	 //机器人设定的“学用户说话”或者“默认回答”
+	
+	
+	private String getStringFormJson(String str) throws JSONException {
+		StringBuffer resultString = null;
+		JSONObject jsonObject;
+		
+		jsonObject = new JSONObject(str);
+		System.out.println(jsonObject.getString("code"));
+		
+		resultString=new StringBuffer(jsonObject.getString("text"));
+		resultString.append(" ");
+        
+		int code=Integer.parseInt(jsonObject.getString("code"));
+		
+     
+		
+		switch (code) {
+		case URL_INFO :
+			resultString.append(jsonObject.getString("url"));
+			System.out.println("------->"+jsonObject.getString("url"));
+			break;
+		case NEWS_INFO :
+			resultString.append(jsonObject.getString("url"));
+			resultString.append(jsonObject.getString("list"));			
+			break;
+	
+
+		default:
+			break;
+		}
+		
+				
+		System.out.println("resultString"+resultString);
+		return resultString.toString();		
+	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -194,7 +252,5 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		}
 		
 	}
-
-
 
 }

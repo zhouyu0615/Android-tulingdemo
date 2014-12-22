@@ -25,6 +25,7 @@
         android:layout_marginRight="50dp"
         android:layout_toRightOf="@id/iv"
         android:background="@drawable/aio_friend_bg_nor_11"
-        android:gravity="center" />
+        android:gravity="center"
+        android:autoLink="all" />
     
 </RelativeLayout>
