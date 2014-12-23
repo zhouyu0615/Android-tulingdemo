@@ -1,6 +1,8 @@
 package com.example.tulingdemo;
 
 import java.io.IOException;
+
+import java.lang.annotation.Retention;
 import java.lang.reflect.Array;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -19,10 +21,15 @@ import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.rtp.AudioStream;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,9 +40,41 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.baidu.speechsynthesizer.SpeechSynthesizer;
+import com.baidu.speechsynthesizer.SpeechSynthesizerListener;
+import com.baidu.speechsynthesizer.d.c;
+import com.baidu.speechsynthesizer.publicutility.SpeechError;
+
 //api key f7f0654e45e5fb1638e7e89d5d310c3c
 public class MainActivity extends Activity implements HttpGetDataListener,
 		android.view.View.OnClickListener {
+
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+	     super.onCreateOptionsMenu(menu);
+	     
+	     MenuInflater mInflater=getMenuInflater();
+	     mInflater.inflate(R.menu.main, menu);
+	     
+	     return true;
+	}
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
+	}
+
+
+
+
 
 	private static final OnClickListener OnClickListener = null;
 
@@ -51,14 +90,16 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 	private TextAdapter textAdapter;
 	
 	private long currentTime, oldTime;
+	
+	private static SpeechSynthesizerThread speechThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		initView();
-
+		initView();       	
+		setVolumeControlStream(AudioManager.STREAM_MUSIC);		 
 	}
 
 	public void initView() {
@@ -73,7 +114,11 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 		listView.setAdapter(textAdapter);
 
-		ListData listData = new ListData(GetWelcomeSentence(),
+		String welString=GetWelcomeSentence();	
+		
+		new SpeechSynthesizerThread(getApplicationContext(), welString).start();
+		
+		ListData listData = new ListData(welString,
 				ListData.RECEIVER,getTime());
 		lists.add(listData);
 		
@@ -101,9 +146,27 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 	}
 
 	@Override
-	public void GetDataUrl(String data) {
+	public void GetDataUrl(final String data) {
 		// TODO Auto-generated method stub
 		 System.out.println(data);
+		 
+//		 new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				try {
+//					setParams();
+//					int ret=speechSynthesizer.speak(getStringFormJson(data));
+//					System.out.println("------->ret="+ret);
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		}).start();
+		 
 		 ParseText(data);
 	}
 
@@ -112,8 +175,10 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		try {	
 			if(str!="")
 			{
+			String getString=getStringFormJson(str);
 				
-			ListData  lData = new ListData(getStringFormJson(str),
+			new SpeechSynthesizerThread(getApplicationContext(), getString).start();	
+			ListData  lData = new ListData(getString,
 					ListData.RECEIVER,getTime());
 			
 			lists.add(lData);
@@ -121,8 +186,13 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 			ListData	lData=new ListData(getResources().getString(R.string.Servefailed), 
 						ListData.RECEIVER, getTime());
 			lists.add(lData);
+			
+
+			
+
+			
 			}
-			 
+			//speechThread.setSpeechString(getStringFormJson(str)); 
 			textAdapter.notifyDataSetChanged();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -253,4 +323,9 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		
 	}
 
+	
+	
+	  
+
+	
 }
