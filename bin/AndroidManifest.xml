@@ -13,7 +13,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/zhilin1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -25,6 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="action_settings"></activity>
+        <activity android:name="about"></activity>
     </application>
 
 </manifest>

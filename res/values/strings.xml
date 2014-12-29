@@ -3,7 +3,7 @@
 
     <string name="app_name">小琳机器人</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">设置</string>
     <string name="send">发送</string>
     
     <string name="NetConnectFailed">噢，好像没能连接上网络，要不你检查一下 </string>
@@ -16,6 +16,14 @@
         <item> 亲爱的，好久不见！</item>
         <item >Hello,May I help you ,sir</item>
         <item >一日不见兮，如隔三秋</item>
+        <item >哈哈,约吗?</item>
     </string-array>
+        <string name="quit">退出</string>
+        <string name="about">关于</string>
+        <string name="voice">发音</string>
+        <string name="man_voice">男</string>
+        <string name="woman_voice">女</string>
+        <string name="voice_on">开</string>
+        <string name="voice_off">关</string>
 
 </resources>
