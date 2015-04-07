@@ -58,9 +58,7 @@ public class TextAdapter extends BaseAdapter {
 		TextView tv = (TextView) layout.findViewById(R.id.tv);
 		TextView timeText=(TextView) layout.findViewById(R.id.TimeText);
 
-		
-        
-
+		       
 		tv.setText(lists.get(position).getContent());
 		
 		timeText.setText(lists.get(position).getTime());

@@ -114,8 +114,6 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 	public SettingParams sParams;
 
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,7 +131,7 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 		SharedPreferences.Editor editor = settingPreferences.edit();
 		sParams = new SettingParams();
-		
+
 		if (settingPreferences.getBoolean("first", true)) {
 			// Toast.makeText(getApplicationContext(), "第一次使用，不存在Settingfile",
 			// Toast.LENGTH_LONG).show();
@@ -171,7 +169,7 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 		String welString = GetWelcomeSentence();
 
-		SpeechVoice(welString,sParams);
+		SpeechVoice(welString, sParams);
 
 		ListData listData = new ListData(welString, ListData.RECEIVER,
 				getTime());
@@ -202,16 +200,24 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 		return welcome;
 	}
 
-	
-	protected void SpeechVoice(String speechString,SettingParams sParams) {
-		if(sParams.isVoice_on_flag())
-		{
-		  new SpeechSynthesizerThread(getApplicationContext(), speechString,sParams).start();
+	private SpeechSynthesizerThread speechThread = null;
+
+	protected void SpeechVoice(String speechString, SettingParams sParams) {
+		if (sParams.isVoice_on_flag()) {
+			if (speechThread == null) {
+				speechThread = SpeechSynthesizerThread.getInstance(
+						getApplicationContext(), speechString, sParams);
+				speechThread.start();
+			} else {
+				speechThread.Cancel();
+				speechThread.setSpeechString(speechString);
+
+			}
+
 		}
-		
+
 	}
-	
-	
+
 	@Override
 	public void GetDataUrl(final String data) {
 		// TODO Auto-generated method stub
@@ -362,15 +368,13 @@ public class MainActivity extends Activity implements HttpGetDataListener,
 
 	}
 
-	
 	@Override
 	protected void onRestart() {
 		// TODO Auto-generated method stub
 		super.onRestart();
 		GetSettingFormFile();
 	}
-	
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

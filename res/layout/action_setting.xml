@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Switch
+        android:id="@+id/voiceSwitcher"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="31dp"
+        android:text="@string/voice"
+        android:textOff="@string/voice_off"
+        android:textOn="@string/voice_on" />
+
+    <Switch
+        android:id="@+id/voicechooseSwitcher"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/voiceSwitcher"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/voiceSwitcher"
+        android:layout_marginTop="18dp"
+        android:checked="false"
+        android:text="男/女声"
+        android:textOff="@string/woman_voice"
+        android:textOn="@string/man_voice" />
+
+</RelativeLayout>
